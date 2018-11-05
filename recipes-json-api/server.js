@@ -32,10 +32,10 @@ app.use(cors(corsOptions));
   // ^^ will send messages to the user that only last for 1 page refresh, err.message to send error messages
   // app.use() user on this page to get their info if they're logged in
   
-app.use(async (req, res, next) =>{
-  res.locals.user = req.session.user || {};
-next()
-});
+// app.use(async (req, res, next) =>{
+//   res.locals.user = req.session.user || {};
+// next()
+// });
 
 // Controllers
 // const authController = require('./controllers/authController');

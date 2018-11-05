@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import RecipeList from '../RecipeList/RecipeList';
 import CreateRecipe from '../CreateRecipe/CreateRecipe';
-// import CreateRecipe from '../CreateRecipe/CreateRecipe';
-// import EditRecipe from '../EditRecipe/EditRecipe';
+import EditRecipe from '../EditRecipe/EditRecipe';
 // import RecipeList from '../RecipeList/RecipeList';
 
 class RecipeContainer extends Component {
@@ -11,6 +10,13 @@ class RecipeContainer extends Component {
 
         this.state = {
             recipes: [],
+            recipeToEdit: {
+                title: '',
+                ingredients: '',
+                instructions: '',
+                _id: ''
+            },
+            showEditModal: false
         }
     }
 // getRecipes function - makes a GET request to the server to get the recipes
@@ -47,13 +53,55 @@ class RecipeContainer extends Component {
         console.log(err);
     }
 }
-
 // deleteRecipe function - makes a DELETE request to the server to delete a recipe; takes in
 // // id, parses response, sets state
+    deleteRecipe = async (id) => {
+        const deletedRecipe = await fetch('http://localhost:9000/recipe',
+        {method: 'DELETE'});
+        const deletedRecipeParsed = await deletedRecipe.json();
+        this.setState({recipes: this.state.recipes.filter((recipe) => recipe._id !== id)});
+        console.log(deletedRecipeParsed, ' this recipe was deleted');
+    }
 // handleEditChange - takes in e, sets state
+    handleEditChange = async (e) => {
+        this.setState({
+            ...this.state.recipeToEdit,
+            [e.currentTarget.name]: e.currentTarget.value
+        })
+    }
 // closeAndEdit - makes a PUT request to the server to update the edited recipe; takes in e, 
 // // fetches recipe by _id, // headers: {'Content-Type': 'application/json'},
- 
+    closeAndEdit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const editResponse = await fetch('http://localhost:9000/recipe',
+            {method: 'PUT',
+            body: JSON.stringify({
+                title: this.state.recipeToEdit.title,
+                ingredients: this.state.recipeToEdit.ingredients,
+                instructions: this.state.recipeToEdit.instructions
+            }),
+            headers: {'Content-Type': 'application/json'},
+            });
+            const editResponseParsed = await editResponse.json()
+            const updatedRecipesArray = this.state.recipes.map((recipe)=>{
+                if (recipe._id === editResponseParsed.data._id){
+                    recipe = editResponseParsed.data;
+                }
+                return recipe;
+            });
+            this.setState({
+                showEditModal: false,
+                recipes: updatedRecipesArray
+            });
+            console.log(editResponseParsed, ' parsed response');
+   
+    }   catch(err){
+        console.log(err);
+        }
+    } 
+
 render(){
     console.log(this.state);
     return(
@@ -61,6 +109,7 @@ render(){
             <h1>Recipe app under construction</h1>
             <RecipeList recipes={this.state.recipes}/>
             <CreateRecipe addRecipe={this.addRecipe}/>
+            <EditRecipe open={this.state.showEditModal} recipeToEdit={this.state.recipeToEdit} handleEditChange={this.state.handleEditChange}/>
         </div>
         )
     }
