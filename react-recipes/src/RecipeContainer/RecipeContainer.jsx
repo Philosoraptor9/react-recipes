@@ -60,7 +60,7 @@ render(){
         <div>
             <h1>Recipe app under construction</h1>
             <RecipeList recipes={this.state.recipes}/>
-            <CreateRecipe />
+            <CreateRecipe addRecipe={this.addRecipe}/>
         </div>
         )
     }

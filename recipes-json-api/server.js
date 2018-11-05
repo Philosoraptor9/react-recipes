@@ -22,13 +22,13 @@ const corsOptions = {
 }
 app.use(cors(corsOptions));
 
-app.use((req, res, next)=>{
-    if(req.session.message){
-      res.locals.message = req.session.message;
-      delete req.session.message;
-    }
-    next();
-  })
+// app.use((req, res, next)=>{
+//     if(req.session.message){
+//       res.locals.message = req.session.message;
+//       delete req.session.message;
+//     }
+//     next();
+//   })
   // ^^ will send messages to the user that only last for 1 page refresh, err.message to send error messages
   // app.use() user on this page to get their info if they're logged in
   
