@@ -31,6 +31,23 @@ class RecipeContainer extends Component {
 // // addRecipe function - makes a POST request to the server to add the created recipe; takes in 
 // // recipe & e, prevents default, // headers: {'Content-Type': 'application/json'}, parses response,
 // // sets state
+    addRecipe = async (recipe, e) => {
+        e.preventDefault();
+        console.log(recipe);
+        try {
+            const createdRecipe = await fetch('http://localhost:9000/recipe',
+            {method: 'POST',
+            body: JSON.stringify(recipe),
+            headers: {'Content-Type': 'application/json'}
+        })
+            const parsedResponse = await createdRecipe.json();
+            console.log(parsedResponse);
+            this.setState({recipes: [...this.state.recipes, parsedResponse.data]});
+    }catch(err){
+        console.log(err);
+    }
+}
+
 // deleteRecipe function - makes a DELETE request to the server to delete a recipe; takes in
 // // id, parses response, sets state
 // handleEditChange - takes in e, sets state
@@ -42,7 +59,7 @@ render(){
     return(
         <div>
             <h1>Recipe app under construction</h1>
-            <RecipeList />
+            <RecipeList recipes={this.state.recipes}/>
             <CreateRecipe />
         </div>
         )
