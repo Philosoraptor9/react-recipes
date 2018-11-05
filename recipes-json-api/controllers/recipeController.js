@@ -36,7 +36,7 @@ router.post('/', async(req, res) =>{
 // GET /:id
 router.get('/:id', async(req, res, next) =>{
     try{
-        console.log(req.params.id, 'this is req.params');
+        console.log(req.params.id, ' this is req.params');
         const foundRecipe = await Recipe.findById(req.params.id);
         res.json({
             status: 200,
