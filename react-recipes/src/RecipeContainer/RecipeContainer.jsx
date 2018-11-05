@@ -3,6 +3,9 @@ import RecipeList from '../RecipeList/RecipeList';
 import CreateRecipe from '../CreateRecipe/CreateRecipe';
 import EditRecipe from '../EditRecipe/EditRecipe';
 // import RecipeList from '../RecipeList/RecipeList';
+// https://api.edamam.com/search/app_id=${5e4b0c5c}&app_key=${459a130d904b5a0e60b7682878b95ffa}
+// app ID - 5e4b0c5c
+// app key - 459a130d904b5a0e60b7682878b95ffa
 
 class RecipeContainer extends Component {
     constructor(){
