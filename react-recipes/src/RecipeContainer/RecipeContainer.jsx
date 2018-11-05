@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import RecipeList from '../RecipeList/RecipeList';
+import CreateRecipe from '../CreateRecipe/CreateRecipe';
 // import CreateRecipe from '../CreateRecipe/CreateRecipe';
 // import EditRecipe from '../EditRecipe/EditRecipe';
 // import RecipeList from '../RecipeList/RecipeList';
@@ -27,6 +29,8 @@ render(){
     return(
         <div>
             <h1>Recipe app under construction</h1>
+            <RecipeList />
+            <CreateRecipe />
         </div>
         )
     }

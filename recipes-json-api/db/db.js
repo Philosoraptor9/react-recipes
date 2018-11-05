@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const connectionString = 'mongodb://localhost/recipeBook'
 
-mongoose.connect({ useNewUrlParser: true });
+mongoose.connect(connectionString);
 
 mongoose.connection.on('connected', () => {
   console.log(`mongoose is connected to ${connectionString}`);

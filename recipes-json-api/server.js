@@ -35,11 +35,11 @@ next()
 //Require models
 const User = require('./models/user');
 const Auth = require('./models/auth');
-const Song = require('./models/recipe');
+const Recipe = require('./models/recipe');
 
 // Controllers
-const authController = require('./controllers/authController');
-const userController = require('./controllers/userController');
+// const authController = require('./controllers/authController');
+// const userController = require('./controllers/userController');
 const recipeController = require('./controllers/recipeController');
 
 // These dictate the url paths
@@ -47,7 +47,7 @@ app.use('/recipe', recipeController);
 // app.use('/user', userController);
 // app.use('/auth', authController);
 
-const port = 3000;
+const port = 9000;
 
 app.listen(port, () => {
     console.log(`App is listening on port ${port}`);
