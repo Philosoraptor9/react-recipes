@@ -14,7 +14,20 @@ class RecipeContainer extends Component {
         }
     }
 // getRecipes function - makes a GET request to the server to get the recipes
+    getRecipes = async () => {
+        const recipes = await fetch('http://localhost:9000/recipe');
+        const recipesParsedJSON = await recipes.json();
+        console.log(recipesParsedJSON);
+        return recipesParsedJSON;
+    }
 // componentDidMount - calls the getRecipes function
+    componentDidMount = () => {
+        this.getRecipes().then((recipes) =>{
+            this.setState({recipes: recipes.data});
+        }).catch((err) => {
+            console.log(err)
+        })
+    }
 // // addRecipe function - makes a POST request to the server to add the created recipe; takes in 
 // // recipe & e, prevents default, // headers: {'Content-Type': 'application/json'}, parses response,
 // // sets state

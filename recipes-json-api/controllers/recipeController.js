@@ -47,7 +47,7 @@ router.get('/:id', async(req, res, next) =>{
     }
 })
 
-// PUT update
+// PUT update /:id
 router.put('/:id', async(req, res) => {
     try{
         const updatedRecipe = await Recipe.findByIdAndUpdate(req.params.id, req.body, {new: true});
@@ -60,7 +60,7 @@ router.put('/:id', async(req, res) => {
     }
 })
 
-// DELETE destroy
+// DELETE destroy /:id
 router.delete('/:id', async(req, res) => {
     try{
         const deletedRecipe = await Recipe.findByIdAndRemove(req.params.id);

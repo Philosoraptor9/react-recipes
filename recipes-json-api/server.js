@@ -12,10 +12,15 @@ require('./db/db');
 
 app.use(methodOverride('_method'));
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.json())
-app.use(cors());
+app.use(bodyParser.json());
 app.use(morgan('short'));
 
+const corsOptions = {
+  origin: 'http://localhost:3000',
+  credentials: true,
+  optionsSuccessStatus: 200
+}
+app.use(cors(corsOptions));
 
 app.use((req, res, next)=>{
     if(req.session.message){
@@ -31,20 +36,13 @@ app.use(async (req, res, next) =>{
   res.locals.user = req.session.user || {};
 next()
 });
-  
-//Require models
-const User = require('./models/user');
-const Auth = require('./models/auth');
-const Recipe = require('./models/recipe');
 
 // Controllers
 // const authController = require('./controllers/authController');
-// const userController = require('./controllers/userController');
 const recipeController = require('./controllers/recipeController');
 
 // These dictate the url paths
 app.use('/recipe', recipeController);
-// app.use('/user', userController);
 // app.use('/auth', authController);
 
 const port = 9000;

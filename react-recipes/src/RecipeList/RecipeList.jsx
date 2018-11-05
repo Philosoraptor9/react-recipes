@@ -4,6 +4,7 @@ import React from 'react';
 // // recipes, includes edit and delete buttons
 
 const RecipeList = (props) =>{
+    console.log(props);
     const recipes = props.recipes.map((recipe, i) =>{
         return (
             <li key={recipe._id}>
