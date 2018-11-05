@@ -86,7 +86,7 @@ class RecipeContainer extends Component {
             });
             const editResponseParsed = await editResponse.json()
             const updatedRecipesArray = this.state.recipes.map((recipe)=>{
-                if (recipes._id === editResponseParsed.data._id){
+                if (recipe._id === editResponseParsed.data._id){
                     recipe = editResponseParsed.data;
                 }
                 return recipe;
