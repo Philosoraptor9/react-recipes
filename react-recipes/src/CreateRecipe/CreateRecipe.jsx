@@ -30,7 +30,7 @@ class CreateRecipe extends Component {
                 <Form.Input type='text' name='instructions' value={this.state.instructions} onChange={this.updateRecipe}/>
                 <Button color="green" type='Submit'>Create Recipe</Button>
                 </Form>
-      </Segment>
+            </Segment>
       )
   }
 }
