@@ -25,6 +25,7 @@ class CreateRecipe extends Component {
                 <Form.Input type='text' name='title' value={this.state.title} onChange={this.updateRecipe}/>
                 <Label>Ingredients:</Label>
                 <Form.Input type='text' name='ingredients' value={this.state.ingredients} onChange={this.updateRecipe}/>
+                <Label>Instructions:</Label>
                 <Form.Input type='text' name='instructions' value={this.state.instructions} onChange={this.updateRecipe}/>
                 <Button color="green" type='Submit'>Create Recipe</Button>
                 </Form>
