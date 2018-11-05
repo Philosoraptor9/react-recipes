@@ -11,7 +11,6 @@ router.get('/', async (req, res, next) => {
             status: 200,
             data: allRecipes
           })
-    
         } catch (err){
           console.log('Error ' + err);
     }
