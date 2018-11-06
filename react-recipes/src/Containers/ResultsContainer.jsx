@@ -8,7 +8,7 @@ class ResultsContainer extends Component {
   
       this.state = {recipes: []};
     }
-    handleTermChange = async (term) => {
+    handleSubmit = async (term) => {
       const url = `https://api.edamam.com/search?q=${term.replace(/\s/g, '+')}&app_id=5e4b0c5c&app_key=459a130d904b5a0e60b7682878b95ffa`;
       const result = await fetch(url);
       const parsed = await result.json();
@@ -18,7 +18,7 @@ class ResultsContainer extends Component {
     render() {
       return (
         <div className="App">
-          <SearchContainer onTermChange={term => this.handleTermChange(term)} />
+          <SearchContainer onSubmit={term => this.handleSubmit(term)} />
           <SearchRecipeList recipes={this.state.recipes} />
         </div>
       );
