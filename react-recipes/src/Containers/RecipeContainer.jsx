@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import CreateRecipe from '../Components/CreateRecipe';
 import EditRecipe from '../Components/EditRecipe';
 import UserRecipeList from '../Components/UserRecipeList';
@@ -25,7 +26,9 @@ class RecipeContainer extends Component {
     getRecipes = async () => {
         const recipes = await fetch('http://localhost:9000/recipe');
         const recipesParsedJSON = await recipes.json();
+
         // console.log(recipesParsedJSON);
+
         return recipesParsedJSON;
     }
 // componentDidMount - calls the getRecipes function
@@ -105,6 +108,7 @@ class RecipeContainer extends Component {
     } 
 
 render(){
+
     // console.log(this.state);
     return(
         <div>
