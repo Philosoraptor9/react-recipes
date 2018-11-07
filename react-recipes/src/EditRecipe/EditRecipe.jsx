@@ -5,7 +5,7 @@ import {Form, Button, Label, Header } from 'semantic-ui-react';
 const EditRecipe = (props) => {
     console.log(props)
     return (
-        <Form onSubmit={props.closeAndEdit}>
+        <Form onSubmit={props.closeAndEdit} className="sudoku">
             <Header>Edit Recipe</Header>
             <Label>
               Edit Recipe Title:
@@ -19,7 +19,7 @@ const EditRecipe = (props) => {
               Edit Recipe Instructions:
             </Label>
             <Form.Input type='text' name='instructions' value={props.recipeToEdit.instructions} onChange={props.handleEditChange}/>
-              <Button color='green' type='submit'>Edit Recipe</Button>
+              <Button color="blue" type='submit'>Edit Recipe</Button>
           </Form>
       )
   }
