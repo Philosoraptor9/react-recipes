@@ -6,6 +6,7 @@ console.log(props);
         <li>
             <p>{props.recipe.recipe.label}</p>
             <p>{props.recipe.recipe.healthLabels}</p>
+            <p><a href={props.recipe.recipe.url}></a></p>
         </li>
     )
 }
