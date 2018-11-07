@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import RecipeList from '../RecipeList/RecipeList';
-import CreateRecipe from '../CreateRecipe/CreateRecipe';
-import EditRecipe from '../EditRecipe/EditRecipe';
-// import RecipeList from '../RecipeList/RecipeList';
+
+import CreateRecipe from '../Components/CreateRecipe';
+import EditRecipe from '../Components/EditRecipe';
+import UserRecipeList from '../Components/UserRecipeList';
+import ResultsContainer from './ResultsContainer';
+// https://api.edamam.com/search?q=${term.replace(/\s/g, '+')}app_id=${5e4b0c5c}&app_key=${459a130d904b5a0e60b7682878b95ffa}
+
 
 class RecipeContainer extends Component {
     constructor(){
@@ -23,7 +26,9 @@ class RecipeContainer extends Component {
     getRecipes = async () => {
         const recipes = await fetch('http://localhost:9000/recipe');
         const recipesParsedJSON = await recipes.json();
-        console.log(recipesParsedJSON);
+
+        // console.log(recipesParsedJSON);
+
         return recipesParsedJSON;
     }
 // componentDidMount - calls the getRecipes function
@@ -103,11 +108,12 @@ class RecipeContainer extends Component {
     } 
 
 render(){
-    console.log(this.state);
+
+    // console.log(this.state);
     return(
         <div>
             <h1>Recipe app under construction</h1>
-            <RecipeList recipes={this.state.recipes}/>
+            <UserRecipeList recipes={this.state.recipes}/>
             <CreateRecipe addRecipe={this.addRecipe}/>
             <EditRecipe open={this.state.showEditModal} recipeToEdit={this.state.recipeToEdit} handleEditChange={this.state.handleEditChange}/>
         </div>
