@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import CreateRecipe from '../Components/CreateRecipe';
 import EditRecipe from '../Components/EditRecipe';
 import UserRecipeList from '../Components/UserRecipeList';
+import ResultsContainer from './ResultsContainer';
 // https://api.edamam.com/search?q=${term.replace(/\s/g, '+')}app_id=${5e4b0c5c}&app_key=${459a130d904b5a0e60b7682878b95ffa}
 
 

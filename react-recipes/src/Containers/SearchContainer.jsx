@@ -5,18 +5,22 @@ class SearchContainer extends Component {
         super();
         this.state = { searchTerm: ''}
     }
-    onSubmit(term){
-        this.setState({term});
+    handleChange = (e) => {
+        this.setState({searchTerm: e.target.value});
+    }
+    onSubmit = (e) => {
+        e.preventDefault();
+        this.props.handleSubmit(this.state.searchTerm);
+        
         console.log(this.state);
         console.log(this.props);
-        // this.props.onTermChange(term);
     }
     render(){
         return(
             <div className="search-container">
                <div className="search-bar">
-                    <form onSubmit={e => this.onSubmit(e.target.value)}>   
-                        <input type="text" name="text" placeholder="Search..." ></input>
+                    <form onSubmit={this.onSubmit}>   
+                        <input type="text" name="text" placeholder="Search..." onChange={this.handleChange} ></input>
                         <button type="submit">Submit</button>
                     </form>
                 </div>
