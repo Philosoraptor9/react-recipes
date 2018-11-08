@@ -9,8 +9,9 @@ class App extends Component {
     super();
 
     this.state = {
+      username: '',
+      password: '',
       loggedIn: false,
-      currentUser: {}
     }
   }
 handleInput = (e) => {
@@ -18,17 +19,33 @@ handleInput = (e) => {
      [e.currentTarget.name]: e.currentTarget.value
    })
   }
-handleRegistration = async (formData) =>{
+handleRegistration = async (e) =>{
     e.preventDefault()
-    console.log(formData);
-    const newUser = await fetch('http://localhost:9000/user',
+    console.log('Registering user')
+    console.log(this.state);
+    try{
+    const newUser = await fetch('http://localhost:9000/user/register',
     {
       method: 'POST',
-      body: JSON.stringify(formData),
+      body: JSON.stringify(this.state),
       headers: {'Content-Type': 'application/json'}
+    });
+  const parsedResponse = await newUser.json();
+  console.log(parsedResponse, ' response from server')
+  if (parsedResponse.status == 200){
+    this.setState({
+      username: parsedResponse.data.username,
+      password: parsedResponse.data.password,
+      loggedIn: true
     })
-    console.log(formData);
+  } else if (parsedResponse.status == 500){
+    console.log("INTERNAL SERVER ERROR")
+  }
+}catch(err){
+  console.log(err, ' error occurred');
+  }
 }
+
   render() {
     return this.state.loggedIn ? (
       <div className="App">
