@@ -4,21 +4,22 @@ import CreateRecipe from '../Components/CreateRecipe';
 import EditRecipe from '../Components/EditRecipe';
 import UserRecipeList from '../Components/UserRecipeList';
 import ResultsContainer from './ResultsContainer';
+import { Grid } from 'semantic-ui-react';
 // https://api.edamam.com/search?q=${term.replace(/\s/g, '+')}app_id=${5e4b0c5c}&app_key=${459a130d904b5a0e60b7682878b95ffa}
 
 
 class RecipeContainer extends Component {
     constructor(){
-        super()
+        super();
 
         this.state = {
             recipes: [],
-            recipeToEdit: {
+            // recipeToEdit: {
                 title: '',
                 ingredients: '',
                 instructions: '',
-                _id: ''
-            },
+                _id: '',
+            // },
             showEditModal: false
         }
     }
@@ -61,7 +62,10 @@ class RecipeContainer extends Component {
 // deleteRecipe function - makes a DELETE request to the server to delete a recipe; takes in
 // // id, parses response, sets state
     deleteRecipe = async (id) => {
-        const deletedRecipe = await fetch(`http://localhost:9000/recipe${id}`,
+
+        const deletedRecipe = await fetch(`http://localhost:9000/recipe/${id}`,
+
+
         {method: 'DELETE'});
         const deletedRecipeParsed = await deletedRecipe.json();
         this.setState({recipes: this.state.recipes.filter((recipe) => recipe._id !== id)});
@@ -69,25 +73,31 @@ class RecipeContainer extends Component {
     }
 // handleEditChange - takes in e, sets state
     handleEditChange = async (e) => {
+        // console.log("heyyyyy")
         this.setState({
-            ...this.state.recipeToEdit,
-            [e.currentTarget.name]: e.currentTarget.value
+            // ...this.state.recipeToEdit,
+            [e.currentTarget.name]: e.currentTarget.value,
+            // recipe: "nice",
+            // recipeToEdit
         })
+        console.log("heyyyyy")
     }
-// closeAndEdit - makes a PUT request to the server to update the edited recipe; takes in e, 
-// // fetches recipe by _id, // headers: {'Content-Type': 'application/json'},
+
+
+    // closeAndEdit - makes a PUT request to the server to update the edited recipe; takes in e, 
+    // // fetches recipe by _id, // headers: {'Content-Type': 'application/json'},
     closeAndEdit = async (e) => {
         e.preventDefault();
-
+        console.log("GOT HERE")
         try {
             const editResponse = await fetch('http://localhost:9000/recipe',
-            {method: 'PUT',
-            body: JSON.stringify({
-                title: this.state.recipeToEdit.title,
-                ingredients: this.state.recipeToEdit.ingredients,
-                instructions: this.state.recipeToEdit.instructions
-            }),
-            headers: {'Content-Type': 'application/json'},
+                {method: 'PUT',
+                body: JSON.stringify({
+                    title: this.state.title,
+                    ingredients: this.state.ingredients,
+                    instructions: this.state.instructions
+                }),
+                headers: {'Content-Type': 'application/json'},
             });
             const editResponseParsed = await editResponse.json()
             const updatedRecipesArray = this.state.recipes.map((recipe)=>{
@@ -106,17 +116,32 @@ class RecipeContainer extends Component {
         console.log(err);
         }
     } 
+    // opens Modal for editting movies
 
-render(){
-
-    // console.log(this.state);
-    return(
-        <div>
-            <h1>Recipe app under construction</h1>
-            <UserRecipeList recipes={this.state.recipes}/>
-            <CreateRecipe addRecipe={this.addRecipe}/>
-            <EditRecipe open={this.state.showEditModal} recipeToEdit={this.state.recipeToEdit} handleEditChange={this.state.handleEditChange}/>
-        </div>
+    openAndEdit = (recipeFromTheList) => {
+        console.log(recipeFromTheList, ' recipeToEdit  ');
+        this.setState({
+          showEditModal: true,
+          recipeToEdit: {
+            ...recipeFromTheList
+          }
+        })
+      }
+    render(){
+        // console.log(this.state);
+        return(
+            <Grid columns={2} divided textAlign='center' style={{ height: '100%' }} verticalAlign='top' stackable>
+                    <Grid.Row>
+                        <Grid.Column>
+                        <h1>Recipe app under construction</h1>
+                            <CreateRecipe addRecipe={this.addRecipe}/>
+                        </Grid.Column>
+                        <Grid.Column>
+                            <UserRecipeList openAndEdit={this.openAndEdit} deleteRecipe={this.deleteRecipe} recipes={this.state.recipes}/>
+                        </Grid.Column>
+                        <EditRecipe  open={this.state.showEditModal} handleEditChange={this.handleEditChange} closeAndEdit={this.closeAndEdit}/>
+                    </Grid.Row>
+            </Grid>
         )
     }
 }
