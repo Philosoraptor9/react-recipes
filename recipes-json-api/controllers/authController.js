@@ -1,40 +1,34 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
+const User = require('../models/user')
 
-router.get('/login', async (req, res) => {
-    res.render('auth/login.ejs', {message: req.session.message});
-});
-
-router.get('/register', async (req, res) => {
-    res.render('auth/login.ejs', {message: req.session.message});
-});
-
+// Registration
 router.post('/register', async (req, res)=> {
-    try{
     console.log(req.body);
-    const password = req.body.password;
-    const passwordHash = bcrypt.hashSync(password, bcrypt.genSaltSync(12));
-    console.log(passwordHash)
+    try{
+        const newUser = await User.create(req.body);
+        console.log(req.body);
 
-    const userEntry = {};
-    userEntry.username = req.body.username;
-    userEntry.password = passwordHash;
-
-    const user = await User.create(userEntry);
-    const foundUser = await User.findOne({username: req.body.username});
-    console.log(user);
-    // req.session.username = req.body.username;
-    req.session.logged = true;
-    req.session.message = '';
-    req.session.userId = foundUser._id;
-    req.session.user = foundUser;
-    res.redirect('/recipe');
+        const password = req.body.password;
+        const passwordHash = bcrypt.hashSync(password, bcrypt.genSaltSync(12));
+        console.log(passwordHash)
+        
+        req.session.username = req.body.username;
+        req.session.password = req.body.password;
+        req.session.logged = true;
+        console.log(newUser);
+        // req.session.message = '';
+        res.json({
+            status: 200,
+            data: newUser
+        })
     }catch(err){
         console.log(err);
     }
 });
 
+// Login
 router.post('/login', async (req, res)=> {
     try {
     const foundUser = await User.findOne({username: req.body.username});
@@ -45,8 +39,11 @@ router.post('/login', async (req, res)=> {
             console.log(req.session.logged);
             req.session.userId = foundUser._id;
             req.session.user = foundUser;
-            res.redirect('/recipe');
-            }
+            res.json({
+                status: 200,
+                data: foundUser
+            })
+        }
         else {
             req.session.message = 'incorrect username or password';
             console.log(req.session.message);
@@ -64,6 +61,7 @@ router.post('/login', async (req, res)=> {
     }
 });
 
+// Logout
 router.get('/logout', (req, res)=> {
     req.session.destroy((err) => {
         if(err){
