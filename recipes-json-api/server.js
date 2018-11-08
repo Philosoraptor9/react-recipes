@@ -38,12 +38,14 @@ app.use(cors(corsOptions));
 // });
 
 // Controllers
-// const authController = require('./controllers/authController');
+const authController = require('./controllers/authController');
 const recipeController = require('./controllers/recipeController');
+const userController = require('./controllers/userController')
 
 // These dictate the url paths
+app.use('/user', userController);
 app.use('/recipe', recipeController);
-// app.use('/auth', authController);
+app.use('/auth', authController);
 
 const port = 9000;
 
