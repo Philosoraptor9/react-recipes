@@ -20,7 +20,7 @@ class SearchContainer extends Component {
             <div className="search-container">
                <div className="search-bar">
                     <form onSubmit={this.onSubmit}>   
-                        <input type="text" name="text" placeholder="Search..." onChange={this.handleChange} ></input>
+                        <input type="text" name="text" placeholder="Search Edamam recipe database..." onChange={this.handleChange} ></input>
                         <button type="submit">Submit</button>
                     </form>
                 </div>
