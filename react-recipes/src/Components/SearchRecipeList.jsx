@@ -7,7 +7,10 @@ const SearchRecipeList = (props) => {
         return <SearchRecipeItem key={label.id} recipe={label} />
     });
     return (
-        <ul>{recipeItems}</ul>
+        <div>
+            <h3>Edamam Search Results:</h3>
+                <ul>{recipeItems}</ul>
+        </div>
     )
 }
 

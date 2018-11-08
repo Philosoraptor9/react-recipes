@@ -62,7 +62,10 @@ class RecipeContainer extends Component {
 // deleteRecipe function - makes a DELETE request to the server to delete a recipe; takes in
 // // id, parses response, sets state
     deleteRecipe = async (id) => {
+
         const deletedRecipe = await fetch(`http://localhost:9000/recipe/${id}`,
+
+
         {method: 'DELETE'});
         const deletedRecipeParsed = await deletedRecipe.json();
         this.setState({recipes: this.state.recipes.filter((recipe) => recipe._id !== id)});

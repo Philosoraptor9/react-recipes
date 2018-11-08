@@ -17,7 +17,7 @@ router.get('/', async (req, res, next) => {
 })
 
 
-// POST create
+// POST create a recipe
 router.post('/', async(req, res) =>{
     try{
         console.log(req.body, ' this is req.body');
@@ -32,7 +32,7 @@ router.post('/', async(req, res) =>{
 })
 
 
-// GET /:id
+// GET a recipe at /:id
 router.get('/:id', async(req, res, next) =>{
     try{
         console.log(req.params.id, ' this is req.params');
@@ -46,7 +46,7 @@ router.get('/:id', async(req, res, next) =>{
     }
 })
 
-// PUT update /:id
+// PUT update recipe /:id
 router.put('/:id', async(req, res) => {
     try{
         const updatedRecipe = await Recipe.findByIdAndUpdate(req.params.id, req.body, {new: true});
@@ -59,7 +59,7 @@ router.put('/:id', async(req, res) => {
     }
 })
 
-// DELETE destroy /:id
+// DELETE destroy recipe at /:id
 router.delete('/:id', async(req, res) => {
     try{
         const deletedRecipe = await Recipe.findByIdAndRemove(req.params.id);
