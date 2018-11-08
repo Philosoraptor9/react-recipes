@@ -62,9 +62,9 @@ handleLogin = async (e) =>{
         body: JSON.stringify(this.state),
         headers: {'Content-Type': 'application/json'}
       });
-  const parsedResponse = await loggedUser.json();
-  console.log(parsedResponse, ' response from server')
-  if (parsedResponse.status == 200){
+      const parsedResponse = await loggedUser.json();
+      console.log(parsedResponse, ' response from server')
+      if (parsedResponse.status == 200){
     this.setState({
       username: parsedResponse.data.username,
       password: parsedResponse.data.password,

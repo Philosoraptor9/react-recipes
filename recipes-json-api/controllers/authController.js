@@ -14,6 +14,9 @@ router.post('/register', async (req, res)=> {
         const passwordHash = bcrypt.hashSync(password, bcrypt.genSaltSync(12));
         console.log(passwordHash)
         
+        newUser.password = passwordHash;
+        await newUser.save();
+        
         req.session.username = req.body.username;
         req.session.password = req.body.password;
         req.session.logged = true;
@@ -31,14 +34,15 @@ router.post('/register', async (req, res)=> {
 // Login
 router.post('/login', async (req, res)=> {
     try {
-    const foundUser = await User.findOne({username: req.body.username});
-    console.log(foundUser);
+        const foundUser = await User.findOne({username: req.body.username});
+        console.log(foundUser);
     if (foundUser){
         if (bcrypt.compareSync(req.body.password, foundUser.password)){
             req.session.logged = true;
             console.log(req.session.logged);
             req.session.userId = foundUser._id;
-            req.session.user = foundUser;
+            req.session.username = foundUser.username;
+            req.session.password = foundUser.password;
             res.json({
                 status: 200,
                 data: foundUser
@@ -47,13 +51,19 @@ router.post('/login', async (req, res)=> {
         else {
             req.session.message = 'incorrect username or password';
             console.log(req.session.message);
-            res.redirect('/auth/login');
+            res.json({
+                status: 500,
+                data: req.session.message
+            })
             }
         }
     else{
         req.session.message = 'username or password is incorrect';
         console.log(req.session.message);
-        res.redirect('/auth/login');
+        res.json({
+            status: 500,
+            data: req.session.message
+        })
         }
     }catch(err){
         console.log(err);
