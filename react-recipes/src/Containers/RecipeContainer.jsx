@@ -14,12 +14,12 @@ class RecipeContainer extends Component {
 
         this.state = {
             recipes: [],
-            // recipeToEdit: {
+            recipeToEdit: {
                 title: '',
                 ingredients: '',
                 instructions: '',
                 _id: '',
-            // },
+            },
             showEditModal: false
         }
     }
@@ -71,33 +71,21 @@ class RecipeContainer extends Component {
         this.setState({recipes: this.state.recipes.filter((recipe) => recipe._id !== id)});
         console.log(deletedRecipeParsed, ' this recipe was deleted');
     }
-// handleEditChange - takes in e, sets state
-    handleEditChange = async (e) => {
-        // console.log("heyyyyy")
-        this.setState({
-            // ...this.state.recipeToEdit,
-            [e.currentTarget.name]: e.currentTarget.value,
-            // recipe: "nice",
-            // recipeToEdit
-        })
-        console.log("heyyyyy")
-    }
 
 
     // closeAndEdit - makes a PUT request to the server to update the edited recipe; takes in e, 
     // // fetches recipe by _id, // headers: {'Content-Type': 'application/json'},
-    closeAndEdit = async (e) => {
-        e.preventDefault();
-        console.log("GOT HERE")
+    closeAndEdit = async (recipeToEdit) => {
+        // e.preventDefault();
+        console.log(this.state.recipeToEdit._id)
+        console.log(recipeToEdit)
         try {
-            const editResponse = await fetch('http://localhost:9000/recipe',
-                {method: 'PUT',
-                body: JSON.stringify({
-                    title: this.state.title,
-                    ingredients: this.state.ingredients,
-                    instructions: this.state.instructions
-                }),
-                headers: {'Content-Type': 'application/json'},
+            const editResponse = await fetch(`http://localhost:9000/recipe/${recipeToEdit._id}`,{
+                method: 'PUT',
+                body: JSON.stringify(recipeToEdit),
+                headers: {
+                    'Content-Type': 'application/json'
+                },
             });
             const editResponseParsed = await editResponse.json()
             const updatedRecipesArray = this.state.recipes.map((recipe)=>{
@@ -119,13 +107,15 @@ class RecipeContainer extends Component {
     // opens Modal for editting movies
 
     openAndEdit = (recipeFromTheList) => {
-        console.log(recipeFromTheList, ' recipeToEdit  ');
+        
         this.setState({
           showEditModal: true,
           recipeToEdit: {
             ...recipeFromTheList
           }
+          
         })
+        console.log(recipeFromTheList, ' recipeToEdit  ');
       }
     render(){
         // console.log(this.state);
@@ -139,7 +129,7 @@ class RecipeContainer extends Component {
                         <Grid.Column>
                             <UserRecipeList openAndEdit={this.openAndEdit} deleteRecipe={this.deleteRecipe} recipes={this.state.recipes}/>
                         </Grid.Column>
-                        <EditRecipe  open={this.state.showEditModal} handleEditChange={this.handleEditChange} closeAndEdit={this.closeAndEdit}/>
+                        <EditRecipe  recipe={this.state.recipeToEdit} open={this.state.showEditModal} handleEditChange={this.handleEditChange} closeAndEdit={this.closeAndEdit}/>
                     </Grid.Row>
             </Grid>
         )

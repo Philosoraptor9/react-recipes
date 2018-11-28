@@ -12,16 +12,34 @@ class EditRecipe extends Component {
               ingredients: '',
               instructions: '',
               _id: ''
-       
+      
           }
       }
+      // handleEditChange - takes in e, sets state
+    handleEditChange = async (e) => {
+      // console.log("heyyyyy")
+      this.setState({
+          
+              ...this.state,
+              [e.currentTarget.name]: e.currentTarget.value,
+              _id: this.props.recipe._id
+          
+          // ...this.state.recipeToEdit,
+          
+          // recipe: "nice",
+          // recipeToEdit
+      })
+      console.log(this.state.recipeToEdit);
+      console.log("heyyyyy")
+  }
+
     render(){
       console.log()
         return (
           <Modal open={this.props.open}>
           <Header>Edit Recipe</Header>
           <Modal.Content>
-            <Form onSubmit={this.props.closeAndEdit}>
+            <Form onSubmit={this.props.closeAndEdit.bind(null, this.state)}>
               <Label>
                 Edit Recipe Title:
               </Label>
@@ -34,10 +52,9 @@ class EditRecipe extends Component {
                 Edit Instructions:
               </Label>
               <Form.Input type='text' name='instructions' placeholder={this.state.instructions} onChange={this.handleEditChange}/>
-              {/* <Modal.Actions> */}
-                <Button color='blue' type='submit' onSubmit= {this.props.handleEditChange}>Edit Recipe</Button>
-                
-              {/* </Modal.Actions> */}
+              <Modal.Actions>
+                <Button color='blue' type='submit' >Edit Recipe</Button>
+              </Modal.Actions>
             </Form>
           </Modal.Content>
         </Modal>
