@@ -1,6 +1,7 @@
 import React from 'react';
 import SearchRecipeItem from './SearchRecipeItem'
 
+
 const SearchRecipeList = (props) => {
     console.log(props);
     const recipeItems = props.recipes.map((label) =>{
@@ -9,7 +10,7 @@ const SearchRecipeList = (props) => {
     return (
         <div>
             <h3>Edamam Search Results:</h3>
-                <ul>{recipeItems}</ul>
+                <ul class='grid'>{recipeItems}</ul>
         </div>
     )
 }
