@@ -86,5 +86,4 @@ handleLogin = async (e) =>{
     ) : <AuthGateway handleRegistration={this.handleRegistration} handleLogin={this.handleLogin} handleInput={this.handleInput}/>;
   }
 }
-
 export default App;
