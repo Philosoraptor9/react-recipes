@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import CreateRecipe from '../Components/CreateRecipe';
 import EditRecipe from '../Components/EditRecipe';
 import UserRecipeList from '../Components/UserRecipeList';
@@ -25,7 +24,7 @@ class RecipeContainer extends Component {
     }
 // getRecipes function - makes a GET request to the server to get the recipes
     getRecipes = async () => {
-        const recipes = await fetch('http://localhost:9000/recipe');
+        const recipes = await fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}/recipe`);
         const recipesParsedJSON = await recipes.json();
 
         // console.log(recipesParsedJSON);
@@ -47,7 +46,7 @@ class RecipeContainer extends Component {
         e.preventDefault();
         console.log(recipe);
         try {
-            const createdRecipe = await fetch('http://localhost:9000/recipe',
+            const createdRecipe = await fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}/recipe`,
             {method: 'POST',
             body: JSON.stringify(recipe),
             headers: {'Content-Type': 'application/json'}
@@ -63,7 +62,7 @@ class RecipeContainer extends Component {
 // // id, parses response, sets state
     deleteRecipe = async (id) => {
 
-        const deletedRecipe = await fetch(`http://localhost:9000/recipe/${id}`,
+        const deletedRecipe = await fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}/recipe/${id}`,
 
 
         {method: 'DELETE'});
@@ -80,7 +79,7 @@ class RecipeContainer extends Component {
         console.log(this.state.recipeToEdit._id)
         console.log(recipeToEdit)
         try {
-            const editResponse = await fetch(`http://localhost:9000/recipe/${recipeToEdit._id}`,{
+            const editResponse = await fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}/recipe/${recipeToEdit._id}`,{
                 method: 'PUT',
                 body: JSON.stringify(recipeToEdit),
                 headers: {
@@ -123,7 +122,7 @@ class RecipeContainer extends Component {
             <Grid columns={2} divided textAlign='center' style={{ height: '100%' }} verticalAlign='top' stackable>
                     <Grid.Row>
                         <Grid.Column>
-                        <h1>Recipe app under construction</h1>
+                        <h1>Cook Book</h1>
                             <CreateRecipe addRecipe={this.addRecipe}/>
                         </Grid.Column>
                         <Grid.Column>

@@ -9,7 +9,7 @@ const SearchRecipeList = (props) => {
     });
     return (
         <div>
-            <h3>Edamam Search Results:</h3>
+            <h3>Search Results:</h3>
                 <ul class='grid'>{recipeItems}</ul>
         </div>
     )

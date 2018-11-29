@@ -7,18 +7,21 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const methodOverride = require('method-override');
+const path = require('path');
+require('dotenv').config();
+
 
 mongoose.set('useCreateIndex', true);
 
 require('./db/db');
-
+app.use(express.static(path.join(__dirname, 'client/build')));
 app.use(methodOverride('_method'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(morgan('short'));
 
 const corsOptions = {
-  origin: 'http://localhost:3000',
+  origin: process.env.REACT_APP_ADDRESS,
   credentials: true,
   optionsSuccessStatus: 200
 }
@@ -71,12 +74,13 @@ const recipeController = require('./controllers/recipeController');
 const userController = require('./controllers/userController')
 
 // These dictate the url paths
-app.use('/user', userController);
-app.use('/recipe', recipeController);
-app.use('/auth', authController);
+app.use('/api/v1/user', userController);
+app.use('/api/v1/recipe', recipeController);
+app.use('/api/v1/auth', authController);
+app.get('*', (req,res) =>{
+  res.sendFile(path.join(__dirname+'/client/build/index.html'));
+});
+const port = process.env.PORT || 9001;
+app.listen(port);
 
-const port = 9000;
 
-app.listen(port, () => {
-    console.log(`App is listening on port ${port}`);
-  });

@@ -28,7 +28,7 @@ handleRegistration = async (e) =>{
     console.log('Registering user')
     console.log(this.state);
   try{
-    const newUser = await fetch('http://localhost:9000/auth/register',
+    const newUser = await fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}/auth/register`,
     {
       method: 'POST',
       body: JSON.stringify(this.state),
@@ -56,7 +56,7 @@ handleLogin = async (e) =>{
     console.log('Signing user in')
     console.log(this.state);
     try{
-      const loggedUser = await fetch('http://localhost:9000/auth/login',
+      const loggedUser = await fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}/auth/login`,
       {
         method: 'POST',
         body: JSON.stringify(this.state),
